@@ -23,6 +23,11 @@
                      <label for="LEGAJO_ESCOLAR">Apodo</label>
                   </div>
 
+                  <div class="input-field ">
+                     <input type="email" class="email" name="EMAIL" value="{{ old('EMAIL') }}" maxlength="50" disabled>
+                     <label for="EMAIL">Email</label>
+                  </div>
+
                </div>
                <div class="card-action">
                   <button type="submit" class="btn btn-primary">Aceptar</button>

@@ -14,7 +14,21 @@ class Liquidacion extends Model
       'CODIGO',
       'CONCEPTO',
       'ESCUELA', //CLUB
-      'SUMA_FIJA', 
+      'SUMA_FIJA',
       'VENCIMIENTO_1',
    ];
+
+   public function categoria(){
+      return $this->belongsTo('App\Categoria', 'ESCUELA', 'CODIGO');
+   }
+
+   public function concepto(){
+      return $this->belongsTo('App\Concepto', 'CONCEPTO', 'CODIGO');
+   }
+
+   public function cuotas(){
+      return $this->hasMany('App\Cuota', 'LIQUIDACION', 'CODIGO');
+   }
+
+
 }

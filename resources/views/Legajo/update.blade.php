@@ -24,9 +24,15 @@
                   </div>
 
                   <div class="input-field ">
+                     <input type="email" class="email" name="EMAIL" value="{{ $legajo->EMAIL }}" maxlength="50" required>
+                     <label for="EMAIL">Email</label>
+                  </div>
+
+                  <div class="input-field ">
                      <input type="text" class="datepicker" name="BAJA" value="{{ $legajo->BAJA }}" >
                      <label for="BAJA">F.Baja</label>
                   </div>
+
 
                </div>
                <div class="card-action">

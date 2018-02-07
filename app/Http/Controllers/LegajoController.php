@@ -39,8 +39,9 @@ class LegajoController extends Controller
    public function store(Request $request)
    {
       $rules = [
-         'NOMBRE'         =>   'required' ,
-         'LEGAJO_ESCOLAR' =>   'required',
+         'NOMBRE'          =>   'required' ,
+         'LEGAJO_ESCOLAR'  =>   'required',
+         'EMAIL'           =>   'required',
       ];
       $valido = Validator::make($request->all(), $rules);
 
@@ -55,6 +56,7 @@ class LegajoController extends Controller
       $legajo->CODIGO         = $this->numerar('LEGAJOS');
       $legajo->NOMBRE         = strtoupper( $request->get('NOMBRE'));
       $legajo->LEGAJO_ESCOLAR = strtoupper( $request->get('LEGAJO_ESCOLAR'));
+      $legajo->EMAIL          = mb_strtolower( $request->get('EMAIL'));
       $legajo->CURSO          = Auth::user()->CATEGORIA;
       $legajo->save();
 
@@ -76,8 +78,9 @@ class LegajoController extends Controller
    public function update(Request $request, $codigo)
    {
       $rules = [
-         'NOMBRE'         =>   'required' ,
-         'LEGAJO_ESCOLAR' =>   'required',
+         'NOMBRE'          =>   'required' ,
+         'LEGAJO_ESCOLAR'  =>   'required',
+         'EMAIL'           =>   'required',
       ];
       $valido = Validator::make($request->all(), $rules);
 
@@ -95,9 +98,10 @@ class LegajoController extends Controller
       $legajo = Legajo::find($codigo);
       $legajo->NOMBRE         = strtoupper( $request->get('NOMBRE'));
       $legajo->LEGAJO_ESCOLAR = strtoupper( $request->get('LEGAJO_ESCOLAR'));
+      $legajo->EMAIL          = strtolower( $request->get('EMAIL'));
       $legajo->CURSO          = Auth::user()->CATEGORIA;
       if( $request->get('BAJA')){
-         $legajo->Baja = $request->get('BAJA'); 
+         $legajo->Baja = $request->get('BAJA');
       }
       $legajo->save();
 

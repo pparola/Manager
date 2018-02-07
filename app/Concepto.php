@@ -14,4 +14,10 @@ class Concepto extends Model
       'CODIGO',
       'NOMBRE',
    ];
+
+   public function liquidaciones(){
+      return $this->hasMany('App\Liquidacion', 'CONCEPTO', 'CODIGO');
+   }
+
+
 }

@@ -24,5 +24,8 @@ class Categoria extends Model
       return $this->hasMany('App\User', 'CATEGORIA', 'CODIGO' );
    }
 
+   public function liquidaciones(){
+      return $this->hasMany('App\Liquidacion', 'ESCUELA', 'CODIGO' );
+   }
 
 }

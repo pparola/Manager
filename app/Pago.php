@@ -17,4 +17,15 @@ class Pago extends Model
       'FECHA',
       'IMPORTE',
    ];
+
+   protected $dates = [
+      'FECHA',
+   ];
+
+   public function cuota(){
+      return $this->belongsTo('App\Cuota', 'CUOTA', 'CODIGO');
+   }
+
+
+
 }
