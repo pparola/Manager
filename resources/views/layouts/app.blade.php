@@ -9,21 +9,20 @@
       <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
    </head>
    <body >
-
       <div class="mdc-typography" style="display: flex; min-height: 90vh; flex-direction: column; ">
          @yield('content')
       </div>
 
       @if(Auth::check())
          <footer class="page-footer" >
-            © 2018 Adc Consultores
-            <span class="grey-text text-lighten-4 right">{{Auth::user()->name}}-{{Auth::user()->categoria->NOMBRE}}</span>
+            {{Auth::user()->name}}-{{Auth::user()->categoria->NOMBRE}}
          </footer>
       @endif
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
       <script src={{URL::asset("/js/materialize.min.js")}}></script>
       <script src={{URL::asset("/js/toastr.min.js")}}></script>
       <script>window.mdc.autoInit();</script>
+
 
       <script>
          @if(Session::has('message'))
@@ -56,6 +55,7 @@
             closeOnSelect: true, // Close upon selecting a date,
             format: 'dd/mm/yyyy'
          });
+         $('select').material_select();
       </script>
    </body>
 </html>

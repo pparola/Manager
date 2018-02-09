@@ -18,6 +18,10 @@ class Liquidacion extends Model
       'VENCIMIENTO_1',
    ];
 
+   protected $dates = [
+      'VENCIMIENTO_1',
+   ];
+
    public function categoria(){
       return $this->belongsTo('App\Categoria', 'ESCUELA', 'CODIGO');
    }

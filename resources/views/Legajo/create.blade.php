@@ -28,6 +28,11 @@
                      <label for="EMAIL">Email</label>
                   </div>
 
+                  <div class="input-field ">
+                     <input type="number" class="validate" step="any" name="DEREXA" value="{{ old('DEREXA') }}" maxlength="12" required>
+                     <label for="DEREXA">Beca</label>
+                  </div>
+
                </div>
                <div class="card-action">
                   <button type="submit" class="btn btn-primary">Aceptar</button>

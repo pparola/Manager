@@ -40,18 +40,20 @@
             $saldo = $saldo - $cuota->importepagado   ;
          @endphp
 
-         <tr>
-            <td>{{ $cuota->FECHA_1->format('d/m/Y') }}</td>
-            <td>{{ $cuota->liquidacion->concepto->NOMBRE }}</td>
-            <td class="importes">{{ number_format( $cuota->IMPORTE_1,2) }}</td>
-            <td class="importes">{{ number_format( $cuota->importepagado,2) }}</td>
-            @if( is_null($cuota->ultimopago))
-               <td></td>
-            @else
-               <td class="fechas">{{ $cuota->ultimopago->format('d/m/Y') }}</td>
-            @endif
-            <td class="importes">{{ number_format( $saldo,2) }}</td>
-         </tr>
+         @if($cuota->importepagado<$cuota->IMPORTE_1)
+            <tr>
+               <td>{{ $cuota->FECHA_1->format('d/m/Y') }}</td>
+               <td>{{ $cuota->liquidacion->concepto->NOMBRE }}</td>
+               <td class="importes">{{ number_format( $cuota->IMPORTE_1,2) }}</td>
+               <td class="importes">{{ number_format( $cuota->importepagado,2) }}</td>
+               @if( is_null($cuota->ultimopago))
+                  <td></td>
+               @else
+                  <td class="fechas">{{ $cuota->ultimopago->format('d/m/Y') }}</td>
+               @endif
+               <td class="importes">{{ number_format( $saldo,2) }}</td>
+            </tr>
+         @endif
 
       @endforeach
 

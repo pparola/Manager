@@ -9,6 +9,7 @@
    <table width="70%" style="{align: center}">
       <tr><td><h2>Vicentinos</h2></td></tr>
       <tr><td><h3>Constancia de Pago</h3></td></tr>
+      <tr><td><h4>Codigo {{$pago->CODIGO}}</h4></td></tr>
       <tr><td><h4>{{$pago->cuota->legajo->NOMBRE}}</h4></td></tr>
       <tr><td>Apodo {{$pago->cuota->legajo->LEGAJO_ESCOLAR}}</td></tr>
       <tr><td>Categoria {{$pago->cuota->legajo->Categoria->NOMBRE}}</td></tr>

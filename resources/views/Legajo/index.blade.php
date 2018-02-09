@@ -4,13 +4,18 @@
    @include('layouts.menu')
 
    <div class="container">
-
-
       <div class="fixed-action-btn">
          <a class="btn-floating btn-large blue" href="/legajo/create">
             <i class="large material-icons">add</i>
          </a>
       </div>
+
+      @php
+
+         $cantidad = 0;
+         $saldo = 0;
+
+      @endphp
 
 
       <div class="card">
@@ -20,6 +25,7 @@
                <tr>
                   <th>Apodo</th>
                   <th>Nombre</th>
+                  <th>Email</th>
                   <th>Saldo</th>
                   <th>U.Pago</th>
                   <th></th>
@@ -31,10 +37,21 @@
 
                @foreach($legajos as $legajo)
 
+                  @php
+                     $cantidad = $cantidad + 1;
+                     $saldo = $saldo + $legajo->saldo;
+                  @endphp
+
                   <tr>
                      <td>{{ $legajo->LEGAJO_ESCOLAR }}</td>
                      <td>{{ $legajo->NOMBRE }}</td>
-                     <td>{{ number_format( $legajo->saldo,2) }}</td>
+                     <td>{{ $legajo->EMAIL }}</td>
+                     <td>
+                        {{ number_format( $legajo->saldo,2) }}
+                        @if($legajo->DEREXA > 0)
+                           <span class="badge lime">{{$legajo->DEREXA}}%</span>
+                        @endif
+                     </td>
                      @if(is_null( $legajo->ultimopago))
                         <td></td>
                      @else
@@ -58,7 +75,22 @@
 
 
             </tbody>
+
          </table>
+
+
+         <table>
+            <tr>
+               <td>
+                  Cantidad: {{ $cantidad }}
+               </td>
+               <td>
+                  {{number_format( $saldo,2) }}
+               </td>
+            </tr>
+         </table>
+
+
       </div>
    </div>
 

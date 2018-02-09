@@ -33,6 +33,10 @@
                      <label for="BAJA">F.Baja</label>
                   </div>
 
+                  <div class="input-field ">
+                     <input type="number" class="validate" step="any" name="DEREXA" value="{{ $legajo->DEREXA }}" maxlength="12" required>
+                     <label for="DEREXA">Beca</label>
+                  </div>
 
                </div>
                <div class="card-action">

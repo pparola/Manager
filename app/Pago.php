@@ -16,6 +16,7 @@ class Pago extends Model
       'CUOTA',
       'FECHA',
       'IMPORTE',
+      'USUARIO'
    ];
 
    protected $dates = [
@@ -24,6 +25,10 @@ class Pago extends Model
 
    public function cuota(){
       return $this->belongsTo('App\Cuota', 'CUOTA', 'CODIGO');
+   }
+
+   public function usuario(){
+      return $this->belongsTo('App\User', 'USUARIO', 'id');
    }
 
 

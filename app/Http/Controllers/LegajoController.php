@@ -58,6 +58,7 @@ class LegajoController extends Controller
       $legajo->LEGAJO_ESCOLAR = strtoupper( $request->get('LEGAJO_ESCOLAR'));
       $legajo->EMAIL          = mb_strtolower( $request->get('EMAIL'));
       $legajo->CURSO          = Auth::user()->CATEGORIA;
+      $legajo->DEREXA         = $request->get('DEREXA');
       $legajo->save();
 
       $notificacion = ['message'=>'Registro Agregado!', 'alert-type' => 'success'];
@@ -100,6 +101,8 @@ class LegajoController extends Controller
       $legajo->LEGAJO_ESCOLAR = strtoupper( $request->get('LEGAJO_ESCOLAR'));
       $legajo->EMAIL          = strtolower( $request->get('EMAIL'));
       $legajo->CURSO          = Auth::user()->CATEGORIA;
+      $legajo->DEREXA         = $request->get('DEREXA');
+
       if( $request->get('BAJA')){
          $legajo->Baja = $request->get('BAJA');
       }

@@ -8,27 +8,28 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Facades\Auth;
 
-class PagoMail extends Mailable
+
+class BajaPagoMail extends Mailable
 {
-   use Queueable, SerializesModels;
+    use Queueable, SerializesModels;
 
-   public $pago;
+    public $pago;
 
-   public function __construct($pago)
-   {
-      $this->pago = $pago;
-   }
+    public function __construct($pago)
+    {
+        $this->pago = $pago;
+    }
 
-   public function build()
-   {
+    public function build()
+    {
       $address = $this->pago->cuota->legajo->EMAIL;
-      $subject = 'Constancia de Pago';
+      $subject = 'Constancia de baja de Pago';
       $name = Auth::user()->email;
 
-      return $this->view('pago.pdfPago')
+      return $this->view('pago.pdfBajaPago')
                   ->from($address, $name)
                   ->replyTo($address, $name)
                   ->subject($subject)
                   ->with( 'pago', $this->pago );
-   }
+    }
 }

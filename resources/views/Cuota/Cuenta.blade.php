@@ -10,14 +10,33 @@
          <ul class="collection with-header">
             <li class="collection-header"><h4>{{$legajo->NOMBRE}}</h4></li>
             <li class="collection-item">{{$legajo->LEGAJO_ESCOLAR}}</li>
-            <li class="collection-item">email: {{$legajo->EMAIL}}</li>
-            <li class="collection-item">Saldo: ${{ number_format( $legajo->saldo,2 )}}</li>
-            <li class="collection-item">
-               <a class="btn" href="/cuota/{{$legajo->CODIGO}}/pdfcuenta">Emitir Informe</a>
-               <a class="btn" href="/cuota/{{$legajo->CODIGO}}/mailcuenta">Enviar Mail</a>
-               <a class="btn" href="/legajo">Volver</a>
+            <li class="collection-item">email: {{$legajo->EMAIL}}
+               <a class="btn-floating blue" href="/cuota/{{$legajo->CODIGO}}/cambiaremail">
+                  <i class="small material-icons">email</i>
+               </a>
+            </li>
+            <li class="collection-item">Saldo: ${{ number_format( $legajo->saldo,2 )}}
+
+
+               <a class="btn-floating" href="/cuota/{{$legajo->CODIGO}}/pdfcuenta">
+                  <i class="material-icons">attachment</i>
+               </a>
+
+               @if( strlen($legajo->EMAIL)>0 )
+                  @if($legajo->saldo>0)
+                     <a class="btn-floating" href="/cuota/{{$legajo->CODIGO}}/mailcuenta">
+                        <i class="material-icons">email</i>
+                     </a>
+                  @endif
+               @endif
             </li>
          </ul>
+
+         <div class="fixed-action-btn">
+            <a class="btn-floating btn-large blue" href="/cuota/{{$legajo->CODIGO}}/create">
+               <i class="large material-icons">add</i>
+            </a>
+         </div>
 
          <table class="responsive-table highlight">
             <thead>
@@ -59,10 +78,29 @@
                      <td>{{ number_format( $saldo,2) }}</td>
 
                      <td>
+
+
                         @if( $cuota->saldocuota > 0 )
-                           <a class="btn-floating green" href="/pago/{{ $cuota->CODIGO }}/create">
-                              <i class="small material-icons">payment</i>
+
+
+                           @if( strlen($legajo->EMAIL)>0 )
+                              <a class="btn-floating green" href="/pago/{{ $cuota->CODIGO }}/create">
+                                 <i class="small material-icons">payment</i>
+                              </a>
+                           @endif
+
+                           <a class="btn-floating orange" href="/ajuste/{{ $cuota->CODIGO }}/create">
+                              <i class="small material-icons">adjust</i>
                            </a>
+
+                        @endif
+
+                        @if( $cuota->importepagado==0 )
+                           @if( strlen($legajo->EMAIL)>0 )
+                              <a class="btn-floating red" href="/cuota/{{ $cuota->CODIGO }}/delete">
+                                 <i class="small material-icons">delete</i>
+                              </a>
+                           @endif
                         @endif
                      </td>
 
