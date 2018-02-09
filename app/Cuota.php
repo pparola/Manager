@@ -18,7 +18,7 @@ class Cuota extends Model
       'CONCEPTO',
       'FECHA_1',
       'FPAGADO',
-      'IMPORTE',
+      'IMPORTE_1',
       'LEGAJO',
       'LIQUIDACION',
       'MES',
@@ -49,6 +49,17 @@ class Cuota extends Model
       }
       return $suma;
    }
+
+   public function getImportePagadoPuroAttribute(){
+      $suma = 0;
+      foreach ($this->pagos as $pago) {
+         if($pago->CONCEPTO = 'PAGO A CUENTA'){
+            $suma = $suma + $pago->IMPORTE;
+         }
+      }
+      return $suma;
+   }
+
 
    public function getSaldocuotaAttribute(){
       $suma = $this->IMPORTE_1;

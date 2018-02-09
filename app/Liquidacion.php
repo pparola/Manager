@@ -13,8 +13,8 @@ class Liquidacion extends Model
    protected $fillable = [
       'CODIGO',
       'CONCEPTO',
-      'ESCUELA', //CLUB
-      'SUMA_FIJA',
+      'ESCUELA', //CATEGORIA
+      'SUMA_FIJA_1',
       'VENCIMIENTO_1',
    ];
 
@@ -33,6 +33,11 @@ class Liquidacion extends Model
    public function cuotas(){
       return $this->hasMany('App\Cuota', 'LIQUIDACION', 'CODIGO');
    }
+
+   public function getImporteAttribute(){
+      return $this->cuotas->sum("IMPORTE_1");
+   }
+
 
 
 }

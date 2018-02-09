@@ -7,6 +7,7 @@
 <ul id="dropdown1" class="dropdown-content">
 
    <li><a href="/legajo">Legajos</a></li>
+   <li><a href="/liquidacion">Liquidaciones</a></li>
    <li><a href="/pago">Pagos</a></li>
    <li><a href="/ajuste">Ajustes</a></li>
    <li class="divider"></li>

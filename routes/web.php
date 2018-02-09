@@ -49,3 +49,9 @@ Route::get( '/ajuste/{codigo}/create',       'AjusteController@create')->name('a
 Route::post('/ajuste/{codigo}/create',       'AjusteController@store')->name('ajusteStore');
 Route::get( '/ajuste/{codigo}/delete',       'AjusteController@delete')->name('ajusteDelete');
 Route::post('/ajuste/{codigo}/delete',       'AjusteController@destroy')->name('ajusteDestroy');
+
+Route::get( '/liquidacion',                  'LiquidacionController@index')->name('liquidacion');
+Route::get( '/liquidacion/create',           'LiquidacionController@create')->name('liquidacionCreate');
+Route::post('/liquidacion/create',           'LiquidacionController@store')->name('liquidacionStore');
+Route::get( '/liquidacion/{codigo}/delete',  'LiquidacionController@delete')->name('liquidacionDelete');
+Route::post('/liquidacion/{codigo}/delete',  'LiquidacionController@destroy')->name('liquidacionDestroy');
