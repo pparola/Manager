@@ -7,10 +7,14 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
 
+use Illuminate\Support\Facades\Mail;
+use App\Mail\PagoMail;
+
 use App\Liquidacion;
 use App\Concepto;
 use App\Legajo;
 use App\Cuota;
+use App\Pago;
 
 class LiquidacionController extends Controller
 {
@@ -133,6 +137,51 @@ class LiquidacionController extends Controller
       return redirect( '/liquidacion' )->with($notificacion);
    }
 
+   public function cuenta($codigo){
+      $liquidacion = Liquidacion::find($codigo);
+      return view('Liquidacion.cuenta')
+         ->with('liquidacion', $liquidacion)
+         ->with('titulo', 'Liquidacion');
+
+   }
+
+   public function createpagoexpress($codigo){
+      $cuota = Cuota::find($codigo);
+      return view('Liquidacion.pagoexpress')
+         ->with('cuota', $cuota)
+         ->with('titulo', 'Pago Express');
+
+   }
+
+   public function storepagoexpress(Request $request,$codigo){
+
+      $codigoPago = $this->numerar('PAGOS');
+      $cuota = Cuota::find($codigo);
+
+
+      $pago = new Pago;
+      $pago->CODIGO           = $codigoPago;
+      $pago->CONCEPTO         = 'PAGO A CUENTA';
+      $pago->CUOTA            = $cuota->CODIGO;
+      $pago->IMPORTE          = $cuota->IMPORTE_1;
+      $pago->FECHA            = Carbon::now();
+      $pago->USUARIO          = Auth::user()->id;
+      $pago->save();
+
+      $notificacion = ['message'=>'Registro Agregado!', 'alert-type' => 'success'];
+
+      $pago = Pago::find($codigoPago);
+
+      if($pago->cuota->legajo->EMAIL){
+         Mail::to($pago->cuota->legajo->EMAIL)->send(new PagoMail($pago));
+         $notificacion = ['message'=>'Email Enviado', 'alert-type' => 'success'];
+      } else {
+         $notificacion = ['message'=>'No hay mail registrado', 'alert-type' => 'error'];
+      }
+
+      return redirect( '/liquidacion/'.$cuota->LIQUIDACION.'/cuenta' )->with($notificacion);
+
+   }
 
 
 

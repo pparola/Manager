@@ -59,6 +59,9 @@
 
                         <td>{{ number_format(( $pagadoliquidacion / $liquidacion->importe)*100 ,2) }}</td>
                         <td>
+                           <a class="btn-floating yellow" href="/liquidacion/{{ $liquidacion->CODIGO }}/cuenta">
+                              <i class="small material-icons">pageview</i>
+                           </a>
                            @if($pagadoliquidacion==0)
                               <a class="btn-floating red" href="/liquidacion/{{ $liquidacion->CODIGO }}/delete">
                                  <i class="small material-icons">delete</i>

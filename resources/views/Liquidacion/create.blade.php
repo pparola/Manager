@@ -36,7 +36,7 @@
                </div>
                <div class="card-action">
                   <button type="submit" class="btn btn-primary">Aceptar</button>
-                  <a class="btn btn-link" href="/legajo">Cancelar</a>
+                  <a class="btn btn-link" href="/liquidacion">Cancelar</a>
                </div>
 
             </div>

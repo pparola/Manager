@@ -16,6 +16,7 @@ class Controller extends BaseController
    public function numerar($tabla){
       $numerador = Numerador::find($tabla);
       if(!$numerador){
+         $numerador = new Numerador;
          $numerador->TABLA = $tabla;
          $numerador->NUMERO = 0;
       }

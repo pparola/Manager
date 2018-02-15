@@ -11,6 +11,8 @@
    <li><a href="/pago">Pagos</a></li>
    <li><a href="/ajuste">Ajustes</a></li>
    <li class="divider"></li>
+   <li><a href="/asistencia">Asistencia</a></li>
+   <li class="divider"></li>
    <li><a href="/cerrar">Cerrar</a></li>
 
 </ul>

@@ -36,6 +36,10 @@ class Legajo extends Model
       return $this->hasMany('App\Cuota', 'LEGAJO', 'CODIGO');
    }
 
+   public function asistencias(){
+      return $this->hasMany('App\Asistencia', 'LEGAJO', 'CODIGO');
+   }
+
    public function getSaldoAttribute(){
       return $this->cuotas->sum('saldocuota');
    }

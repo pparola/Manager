@@ -55,3 +55,17 @@ Route::get( '/liquidacion/create',           'LiquidacionController@create')->na
 Route::post('/liquidacion/create',           'LiquidacionController@store')->name('liquidacionStore');
 Route::get( '/liquidacion/{codigo}/delete',  'LiquidacionController@delete')->name('liquidacionDelete');
 Route::post('/liquidacion/{codigo}/delete',  'LiquidacionController@destroy')->name('liquidacionDestroy');
+Route::get( '/liquidacion/{codigo}/cuenta',  'LiquidacionController@cuenta')->name('liquidacionCuenta');
+
+Route::get( '/liquidacion/{codigo}/pagoexpress',  'LiquidacionController@createpagoexpress')->name('liquidacioncreatepagoexpress');
+Route::post('/liquidacion/{codigo}/pagoexpress',  'LiquidacionController@storepagoexpress')->name('liquidacionstorepagoexpress');
+
+Route::get( '/asistencia',                   'AsistenciaController@index')->name('asistencia');
+Route::get( '/asistencia/create',            'AsistenciaController@create')->name('asistenciaCreate');
+Route::post('/asistencia/create',            'AsistenciaController@store')->name('asistenciaStore');
+
+Route::get( '/asistencia/{codigo}/edit',     'AsistenciaController@edit')->name('asistenciaEdit');
+Route::post('/asistencia/{codigo}/edit',     'AsistenciaController@update')->name('asistenciaUpdate');
+
+Route::get( '/asistencia/{codigo}/delete',   'AsistenciaController@delete')->name('asistenciaDelete');
+Route::post('/asistencia/{codigo}/delete',   'AsistenciaController@destroy')->name('asistenciaDestroy');
