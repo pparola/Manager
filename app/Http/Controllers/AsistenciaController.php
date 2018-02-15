@@ -100,7 +100,7 @@ class AsistenciaController extends Controller
          $asistencia->save();
       }
 
-      if (isset($request->codigo)){
+      if (is_array($request->codigo)){
 
          foreach ($request->codigo as $key => $value) {
             $asistencia = Asistencia::find($key);
@@ -108,9 +108,9 @@ class AsistenciaController extends Controller
             $asistencia->save();
          }
 
-         $notificacion = ['message'=>'Asistencia guardada!', 'alert-type' => 'success'];
 
       }
+      $notificacion = ['message'=>'Asistencia guardada!', 'alert-type' => 'success'];
       return redirect( '/asistencia' )->with($notificacion);
    }
 
@@ -128,6 +128,16 @@ class AsistenciaController extends Controller
    }
 
    public function destroy($codigo){
+
+      $fecha = Fecha::find($codigo);
+      foreach ($fecha->asistencias as $asistencia) {
+         $asistencia->delete();
+      }
+      $fecha->delete();
+
+   
+      $notificacion = ['message'=>'Asistencia Eliminada!', 'alert-type' => 'success'];
+      return redirect( '/asistencia' )->with($notificacion);
 
    }
 

@@ -16,7 +16,7 @@
             </li>
          </ul>
 
-         <form method="POST" action="/asistencia/{{$fecha->CODIGO}}/edit">
+         <form method="POST" action="/asistencia/{{$fecha->CODIGO}}/delete">
 
             {{ csrf_field() }}
 
