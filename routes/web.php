@@ -69,3 +69,8 @@ Route::post('/asistencia/{codigo}/edit',     'AsistenciaController@update')->nam
 
 Route::get( '/asistencia/{codigo}/delete',   'AsistenciaController@delete')->name('asistenciaDelete');
 Route::post('/asistencia/{codigo}/delete',   'AsistenciaController@destroy')->name('asistenciaDestroy');
+
+Route::get( '/asistencia/{codigo}/add',     'AsistenciaController@addasistencia');
+Route::post('/asistencia/{codigo}/add',     'AsistenciaController@storeasistencia');
+Route::get( '/asistencia/{codigo}/del',     'AsistenciaController@deleteasistencia');
+Route::post('/asistencia/{codigo}/del',     'AsistenciaController@destroyasistencia');

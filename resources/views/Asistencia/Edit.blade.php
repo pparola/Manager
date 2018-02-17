@@ -24,13 +24,18 @@
                <button type="submit" class="btn-floating btn-large green" >
                   <i class="large material-icons">check</i>
                </button>
+               <a href="/asistencia/{{$fecha->CODIGO}}/add" class="btn-floating btn-large blue" >
+                  <i class="large material-icons">add</i>
+               </a>
             </div>
+
 
             <table class="responsive-table highlight">
                <thead>
                   <tr>
                      <th>Apodo</th>
                      <th>Nombre</th>
+                     <th></th>
                      <th></th>
 
                   </tr>
@@ -58,6 +63,12 @@
                               </label>
                            </div>
 
+                        </td>
+
+                        <td>
+                           <a href="/asistencia/{{$asistencia->CODIGO}}/del" class="btn-floating btn-small red" >
+                              <i class="large material-icons">delete</i>
+                           </a>
                         </td>
 
                      </tr>

@@ -66,7 +66,6 @@ class AsistenciaController extends Controller
 
       foreach ($legajos as $legajo) {
 
-
          $asistencia = new Asistencia;
          $asistencia->CODIGO         = $this->numerar('ASISTENCIAS');
          $asistencia->FECHA          = $codigoFecha;
@@ -135,9 +134,103 @@ class AsistenciaController extends Controller
       }
       $fecha->delete();
 
-   
+
       $notificacion = ['message'=>'Asistencia Eliminada!', 'alert-type' => 'success'];
       return redirect( '/asistencia' )->with($notificacion);
+
+   }
+
+   public function addasistencia($codigo){
+
+      $fecha = Fecha::find($codigo);
+
+      $asistencias = [];
+
+      $legajos = Legajo::where('CURSO', Auth::user()->CATEGORIA)
+                  ->where('BAJA', null)
+                  ->orderBy('LEGAJO_ESCOLAR')
+                  ->get();
+
+      foreach ($legajos as $legajo) {
+
+         $asistencia = Asistencia::where('LEGAJO', $legajo->CODIGO)
+                        ->where('FECHA', $codigo)
+                        ->first();
+
+         if( ! $asistencia ){
+            $asistencia = [];
+            $asistencia['LEGAJO'] = $legajo->CODIGO;
+            $asistencia['LEGAJO_ESCOLAR'] = $legajo->LEGAJO_ESCOLAR;
+            $asistencia['NOMBRE'] = $legajo->NOMBRE;
+            $asistencias[] = $asistencia;
+         }
+      }
+      //dd($asistencias);
+
+      return view('Asistencia.addasistencia')
+         ->with('titulo', 'Agregar Jugador')
+         ->with('asistencias', $asistencias )
+         ->with('fecha', $fecha);
+   }
+
+
+   public function storeasistencia(Request $request,$codigo ){
+
+      $fecha = Fecha::find($codigo);
+
+      if (is_array($request->codigo)){
+
+         foreach ($request->codigo as $key => $value) {
+
+            $legajo = Legajo::find($key);
+
+            $asistencia = new Asistencia;
+            $asistencia->CODIGO         = $this->numerar('ASISTENCIAS');
+            $asistencia->FECHA          = $fecha->CODIGO;
+            $asistencia->LEGAJO         = $legajo->CODIGO;
+            $asistencia->PRESENTE       = 0;
+            $asistencia->save();
+
+         }
+      }
+
+      $fecha = Fecha::find($codigo);
+      $titulo = "Asistencia";
+
+      return view('Asistencia.edit')
+         ->with('titulo', $titulo)
+         ->with('fecha', $fecha);
+
+   }
+
+   public function deleteasistencia($codigo){
+
+      $asistencia = Asistencia::find($codigo);
+
+      $titulo = "Eliminar Asistencia";
+
+      return view('Asistencia.delasistencia')
+         ->with('titulo', $titulo)
+         ->with('asistencia', $asistencia);
+
+
+   }
+
+   public function destroyasistencia(Request $request, $codigo){
+
+      $asistencia = Asistencia::find($codigo);
+
+      //dd($asistencia);
+      $codigoFecha = $asistencia->FECHA;
+
+      $asistencia->delete();
+
+      $fecha = Fecha::find($codigoFecha);
+      $titulo = "Asistencia";
+
+      return view('Asistencia.edit')
+         ->with('titulo', $titulo)
+         ->with('fecha', $fecha);
 
    }
 
