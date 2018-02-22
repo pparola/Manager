@@ -39,8 +39,8 @@ class LegajoController extends Controller
    public function store(Request $request)
    {
       $rules = [
-         'NOMBRE'          =>   'required' ,
-         'LEGAJO_ESCOLAR'  =>   'required',
+         'NOMBRE'          =>   'required|unique:legajos' ,
+         'LEGAJO_ESCOLAR'  =>   'required|unique:legajos',
          'EMAIL'           =>   'required',
       ];
       $valido = Validator::make($request->all(), $rules);
@@ -59,6 +59,12 @@ class LegajoController extends Controller
       $legajo->EMAIL          = mb_strtolower( $request->get('EMAIL'));
       $legajo->CURSO          = Auth::user()->CATEGORIA;
       $legajo->DEREXA         = $request->get('DEREXA');
+
+      $legajo->DNI            = $request->get('DNI');
+      $legajo->TELEFONO       = $request->get('TELEFONO');
+      $legajo->TELEFONO1      = $request->get('TELEFONO1');
+
+
       $legajo->save();
 
       $notificacion = ['message'=>'Registro Agregado!', 'alert-type' => 'success'];
@@ -102,6 +108,10 @@ class LegajoController extends Controller
       $legajo->EMAIL          = strtolower( $request->get('EMAIL'));
       $legajo->CURSO          = Auth::user()->CATEGORIA;
       $legajo->DEREXA         = $request->get('DEREXA');
+
+      $legajo->DNI            = $request->get('DNI');
+      $legajo->TELEFONO       = $request->get('TELEFONO');
+      $legajo->TELEFONO1      = $request->get('TELEFONO1');
 
       if( $request->get('BAJA')){
          $legajo->Baja = $request->get('BAJA');

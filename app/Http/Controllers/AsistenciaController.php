@@ -220,7 +220,6 @@ class AsistenciaController extends Controller
 
       $asistencia = Asistencia::find($codigo);
 
-      //dd($asistencia);
       $codigoFecha = $asistencia->FECHA;
 
       $asistencia->delete();

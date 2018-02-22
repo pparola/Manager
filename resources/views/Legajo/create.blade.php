@@ -29,7 +29,23 @@
                   </div>
 
                   <div class="input-field ">
-                     <input type="number" class="validate" step="any" name="DEREXA" value="{{ old('DEREXA') }}" maxlength="12" required>
+                     <input type="number" class="validate" name="DNI" value="{{ old('DNI') }}" maxlength="32" >
+                     <label for="DNI">D.N.I.</label>
+                  </div>
+
+                  <div class="input-field ">
+                     <input type="text" class="validate" name="TELEFONO" value="{{ old('TELEFONO') }}" maxlength="32" >
+                     <label for="TELEFONO">Telefono</label>
+                  </div>
+
+                  <div class="input-field ">
+                     <input type="text" class="validate" name="TELEFONO1" value="{{ old('TELEFONO1') }}" maxlength="32" >
+                     <label for="TELEFONO1">Telefono Padre</label>
+                  </div>
+
+
+                  <div class="input-field ">
+                     <input type="number" class="validate" step="any" name="DEREXA" value="{{ old('DEREXA') }}" maxlength="12" >
                      <label for="DEREXA">Beca</label>
                   </div>
 

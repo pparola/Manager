@@ -26,6 +26,9 @@ class Legajo extends Model
       'NOMBRE',
       'TURNO',
       'EMAIL',
+      'DNI',
+      'TELEFONO',
+      'TELEFONO1',
    ];
 
    public function categoria(){
