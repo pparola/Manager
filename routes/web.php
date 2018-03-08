@@ -74,3 +74,5 @@ Route::get( '/asistencia/{codigo}/add',     'AsistenciaController@addasistencia'
 Route::post('/asistencia/{codigo}/add',     'AsistenciaController@storeasistencia');
 Route::get( '/asistencia/{codigo}/del',     'AsistenciaController@deleteasistencia');
 Route::post('/asistencia/{codigo}/del',     'AsistenciaController@destroyasistencia');
+
+Route::get( '/asistencia/reporte',          'AsistenciaController@reporte');

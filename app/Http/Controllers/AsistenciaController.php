@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Maatwebsite\Excel\Facades\Excel;
+
 use App\Fecha;
 use App\Asistencia;
 use App\Legajo;
@@ -230,6 +232,103 @@ class AsistenciaController extends Controller
       return view('Asistencia.edit')
          ->with('titulo', $titulo)
          ->with('fecha', $fecha);
+
+   }
+
+
+   public function reporte(){
+
+
+      $legajos = Legajo::where('CURSO', Auth::user()->CATEGORIA)
+                  ->where('BAJA', null)
+                  ->orderBy('LEGAJO_ESCOLAR')
+                  ->get();
+
+      $fechas = Fecha::orderBy('CODIGO')->get();
+
+      $reportes = [];
+
+      foreach ($legajos as $legajo) {
+
+         $reporte = [];
+         $reporte['APODO'] = $legajo->LEGAJO_ESCOLAR;
+         $reporte['NOMBRE'] = $legajo->NOMBRE;
+
+         foreach ($fechas as $fecha) {
+
+            $reporte[$fecha->FECHA->format('d-m-Y')] = 0;
+
+            $asistencia = Asistencia::where('LEGAJO', $legajo->CODIGO)
+                                    ->where('FECHA', $fecha->CODIGO)
+                                    ->first();
+
+            if($asistencia){
+               $reporte[$fecha->FECHA->format('d-m-Y')] = $asistencia->PRESENTE;
+            }
+         }
+         $reportes[] = $reporte ;
+
+      }
+
+
+      Excel::create('Asistencia', function($excel) use ($fechas, $reportes) {
+
+         $encabezado = ['APODO', 'NOMBRE'];
+         foreach ($fechas as $fecha){
+            $encabezado[] = $fecha->FECHA->format('d-m-Y');
+         }
+         $encabezado[] = 'total';
+         $encabezado[] = '%';
+
+         $row = 1;
+
+         $titulo = 'Reporte de Asistencia';
+
+         $excel->setTitle($titulo);
+         $excel->setCreator('Vicentinos')
+          ->setCompany('Vicentinos');
+         $excel->setDescription('Reporte generado automaticamente');
+
+         $excel->sheet('Asistencia', function($sheet) use($row, $encabezado, $reportes, $fechas) {
+
+            $sheet->row($row, ['Reporte general Asistencia']);
+            $row = $row + 2;
+
+            $sheet->row($row, $encabezado );
+            $row = $row + 1;
+
+            foreach ($reportes as $reporte) {
+
+               $cantidad = 0;
+               $presente = 0;
+
+               $body = [];
+               $body[] = $reporte['APODO'];
+               $body[] = $reporte['NOMBRE'];
+
+               foreach ($fechas as $fecha) {
+
+                  $body[] = $reporte[  $fecha->FECHA->format('d-m-Y')  ];
+
+                  $cantidad = $cantidad + 1;
+                  if( $reporte[  $fecha->FECHA->format('d-m-Y') ] ==1 ){
+                     $presente = $presente + 1;
+                  }
+               }
+
+               $body[] = $presente;
+               $body[] = number_format($cantidad/$presente * 100, 2);
+
+               $sheet->row($row, $body );
+               $row = $row + 1;
+
+            }
+
+         });
+
+      })->export('xlsx');
+
+
 
    }
 

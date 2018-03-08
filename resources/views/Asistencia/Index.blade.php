@@ -8,6 +8,9 @@
          <a class="btn-floating btn-large blue" href="/asistencia/create">
             <i class="large material-icons">add</i>
          </a>
+         <a class="btn-floating btn-large green" href="/asistencia/create">
+            <i class="large material-icons">grid_on</i>
+         </a>
       </div>
 
       <div class="card">
