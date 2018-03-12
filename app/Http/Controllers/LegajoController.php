@@ -161,7 +161,7 @@ class LegajoController extends Controller
          $reporte = [];
          $reporte['APODO'] = $legajo->LEGAJO_ESCOLAR;
          $reporte['NOMBRE'] = $legajo->NOMBRE;
-         $reporte['SALDO'] =  number_format( $legajo->saldo,2 );
+         $reporte['SALDO'] =  $legajo->saldo;
 
          if( is_null( $legajo->ultimopago ) ){
             $reporte['UPAGO'] =  '';
@@ -204,7 +204,7 @@ class LegajoController extends Controller
                $body = [];
                $body[] = $reporte['APODO'];
                $body[] = $reporte['NOMBRE'];
-               $body[] = $reporte['SALDO'];
+               $body[] = number_format( $reporte['SALDO'],2);
                $body[] = $reporte['UPAGO'];
 
                $sheet->row($row, $body );
