@@ -76,3 +76,4 @@ Route::get( '/asistencia/{codigo}/del',     'AsistenciaController@deleteasistenc
 Route::post('/asistencia/{codigo}/del',     'AsistenciaController@destroyasistencia');
 
 Route::get( '/asistencia/reporte',          'AsistenciaController@reporte');
+Route::get( '/legajo/reporte',              'LegajoController@reporte');

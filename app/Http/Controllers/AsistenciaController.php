@@ -316,8 +316,14 @@ class AsistenciaController extends Controller
                   }
                }
 
+
                $body[] = $presente;
-               $body[] = number_format($cantidad/$presente * 100, 2);
+
+               if( $presente != 0){
+                  $body[] = number_format(($presente / $cantidad) * 100, 2);
+               } else {
+                  $body[] = number_format(0, 2);
+               }
 
                $sheet->row($row, $body );
                $row = $row + 1;

@@ -8,6 +8,12 @@
          <a class="btn-floating btn-large blue" href="/legajo/create">
             <i class="large material-icons">add</i>
          </a>
+
+         <a class="btn-floating btn-large green" href="/legajo/reporte">
+            <i class="large material-icons">grid_on</i>
+         </a>
+
+
       </div>
 
       @php

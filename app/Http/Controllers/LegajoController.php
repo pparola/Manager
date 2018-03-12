@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use App\Legajo;
+use Maatwebsite\Excel\Facades\Excel;
+
 
 class LegajoController extends Controller
 {
@@ -144,4 +146,85 @@ class LegajoController extends Controller
       }
       return redirect( '/legajo' )->with($notificacion);
    }
+
+   public function reporte(){
+
+      $legajos = Legajo::where('CURSO', Auth::user()->CATEGORIA)
+                  ->where('BAJA', null)
+                  ->orderBy('LEGAJO_ESCOLAR')
+                  ->get();
+
+      $reportes = [];
+
+      foreach ($legajos as $legajo) {
+
+         $reporte = [];
+         $reporte['APODO'] = $legajo->LEGAJO_ESCOLAR;
+         $reporte['NOMBRE'] = $legajo->NOMBRE;
+         $reporte['SALDO'] =  number_format( $legajo->saldo,2 );
+
+         if( is_null( $legajo->ultimopago ) ){
+            $reporte['UPAGO'] =  '';
+         }else{
+            $reporte['UPAGO'] =  $legajo->ultimopago->format('d/m/Y');
+         }
+
+
+         $reportes[] = $reporte ;
+
+      }
+
+
+      Excel::create('Saldos', function($excel) use ($reportes) {
+
+         $encabezado = ['Apodo', 'Nombre', 'Saldo', 'U.Pago'];
+
+         $row = 1;
+         $titulo = 'Reporte de Saldos';
+
+         $excel->setTitle($titulo);
+         $excel->setCreator('Vicentinos')
+          ->setCompany('Vicentinos');
+         $excel->setDescription('Reporte generado automaticamente');
+
+         $excel->sheet('Saldos', function($sheet) use($row, $encabezado, $reportes) {
+
+            $sheet->row($row, ['Reporte general de Saldos']);
+            $row = $row + 2;
+
+            $sheet->row($row, $encabezado );
+            $row = $row + 1;
+
+            $total = 0;
+
+            foreach ($reportes as $reporte) {
+
+               $total = $total + $reporte['SALDO'];
+
+               $body = [];
+               $body[] = $reporte['APODO'];
+               $body[] = $reporte['NOMBRE'];
+               $body[] = $reporte['SALDO'];
+               $body[] = $reporte['UPAGO'];
+
+               $sheet->row($row, $body );
+               $row = $row + 1;
+
+            }
+
+            $body = [];
+            $body[] = 'Total';
+            $body[] = '';
+            $body[] = number_format( $total,2);
+            $body[] = '';
+
+            $sheet->row($row, $body );
+            $row = $row + 1;
+
+         });
+
+      })->export('xlsx');
+
+   }
+
 }
